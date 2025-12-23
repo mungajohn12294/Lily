@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Lilian 💕 - A Love Journey</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  background: linear-gradient(to right, #ff9cee, #ff61a6, #ff9cd8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255, 97, 166, 0.3);
+}
+
+.header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.typing-text {
+  font-size: 1.8rem;
+  line-height: 2.5rem;
+  max-width: 700px;
+  margin: 40px auto;
+  min-height: 180px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  padding: 18px 45px;
+  background: linear-gradient(135deg, #ff61a6, #ff9cd8, #ff9cee);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 25px rgba(255, 97, 166, 0.5);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 15px;
+}
+
+.btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(255, 97, 166, 0.8);
+}
+
+.btn:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff9cd8, #ff61a6);
+  z-index: -1;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.btn:hover:after {
+  opacity: 1;
+}
+
+.question-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 25px 0;
+  width: 90%;
+  max-width: 600px;
+  backdrop-filter: blur(15px);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.question-card.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.question-text {
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  color: #ffd1e8;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.question-card input {
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 97, 166, 0.3);
+  font-size: 1.1rem;
+  width: 90%;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.question-card input:focus {
+  outline: none;
+  border-color: #ff61a6;
+  box-shadow: 0 0 15px rgba(255, 97, 166, 0.5);
+}
+
+.question-card input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.answer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.answer-btn {
+  padding: 12px 25px;
+  background: rgba(255, 97, 166, 0.2);
+  border: 2px solid #ff61a6;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.answer-btn:hover {
+  background: #ff61a6;
+  transform: scale(1.05);
+}
+
+.final-message {
+  font-size: 2rem;
+  margin: 40px 0;
+  line-height: 2.5rem;
+  display: none;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  max-width: 700px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.final-message .signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  margin-top: 30px;
+  color: #ff9cd8;
+}
+
+.progress-container {
+  width: 90%;
+  max-width: 600px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 30px 0;
+  overflow: hidden;
+  display: none;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #ff61a6, #ff9cd8);
+  width: 0%;
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: #ff61a6;
+  font-size: 24px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0;
+  z-index: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.background-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.music-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+}
+
+.music-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 97, 166, 0.8);
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+  background: #ff61a6;
+  transform: scale(1.1);
+}
+
+.love-counter {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  font-size: 1.2rem;
+  display: none;
+  z-index: 100;
+}
+
+.love-counter i {
+  color: #ff61a6;
+  margin-right: 10px;
+}
+
+.hidden-love {
+  display: none;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  color: #302b63;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.secret-btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secret-btn:hover {
+  background: rgba(255, 97, 166, 0.2);
+  color: white;
+  border-color: #ff61a6;
+}
+</style>
+</head>
+<body>
+
+<div class="background-hearts" id="backgroundHearts"></div>
+
+<div class="love-counter" id="loveCounter">
+  <i class="fas fa-heart"></i> <span id="loveScore">100</span> Love Points
+</div>
+
+<div class="container">
+  <div class="header">
+    <h1>For My Beautiful Lilian 💖</h1>
+    <p>A journey of our friendship, laughter, and the special bond we share</p>
+  </div>
+  
+  <div class="typing-text" id="typing"></div>
+  
+  <button class="btn pulse" id="startBtn">
+    <i class="fas fa-gift"></i> Begin Our Special Journey 💝
+  </button>
+  
+  <div class="progress-container" id="progressContainer">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Question Cards -->
+  <div class="question-card" id="q1">
+    <div class="question-text">How did we first become friends? What was your first impression of me? 😊</div>
+    <input type="text" id="a1" placeholder="Tell me everything you remember...">
+    <button class="btn" onclick="nextQuestion(1)">Next 💕</button>
+  </div>
+
+  <div class="question-card" id="q2">
+    <div class="question-text">What's your favorite thing about our friendship? What makes it special? 💭</div>
+    <input type="text" id="a2" placeholder="I'd love to know...">
+    <button class="btn" onclick="nextQuestion(2)">Continue 🌸</button>
+  </div>
+
+  <div class="question-card" id="q3">
+    <div class="question-text">What's your absolute favorite memory we've shared together? 🌟</div>
+    <input type="text" id="a3" placeholder="That one time when...">
+    <button class="btn" onclick="nextQuestion(3)">Next 🌈</button>
+  </div>
+
+  <div class="question-card" id="q4">
+    <div class="question-text">What's something you've always wanted to tell me but never had the chance? 🤗</div>
+    <input type="text" id="a4" placeholder="Your secret thoughts...">
+    <button class="btn" onclick="nextQuestion(4)">Next 💫</button>
+  </div>
+
+  <div class="question-card" id="q5">
+    <div class="question-text">How do I make you feel when you're having a bad day? 🥺</div>
+    <div class="answer-buttons">
+      <button class="answer-btn" onclick="submitAnswer(5, 'You make everything better ✨')">You make everything better ✨</button>
+      <button class="answer-btn" onclick="submitAnswer(5, 'Instantly happier 💖')">Instantly happier 💖</button>
+      <button class="answer-btn" onclick="submitAnswer(5, 'Loved and understood 🌸')">Loved and understood 🌸</button>
+    </div>
+  </div>
+
+  <div class="question-card" id="q6">
+    <div class="question-text">What's something you wish we could do together in the future? 🚀</div>
+    <input type="text" id="a6" placeholder="Dreaming of...">
+    <button class="btn" onclick="nextQuestion(6)">Next 🌠</button>
+  </div>
+
+  <div class="question-card" id="q7">
+    <div class="question-text">What song reminds you of our friendship? 🎵</div>
+    <input type="text" id="a7" placeholder="Our theme song...">
+    <button class="btn" onclick="nextQuestion(7)">Next 🎶</button>
+  </div>
+
+  <div class="question-card" id="q8">
+    <div class="question-text">What's the most thoughtful thing I've ever done for you? 💝</div>
+    <input type="text" id="a8" placeholder="That meant so much...">
+    <button class="btn" onclick="nextQuestion(8)">Next 🌺</button>
+  </div>
+
+  <div class="question-card" id="q9">
+    <div class="question-text">Do I make you smile even on your toughest days? 😌</div>
+    <div class="answer-buttons">
+      <button class="answer-btn" onclick="submitAnswer(9, 'Always and forever 💕')">Always and forever 💕</button>
+      <button class="answer-btn" onclick="submitAnswer(9, 'You have magic smile powers ✨')">You have magic smile powers ✨</button>
+      <button class="answer-btn" onclick="submitAnswer(9, 'Your smile is contagious! 😄')">Your smile is contagious! 😄</button>
+    </div>
+  </div>
+
+  <div class="question-card" id="q10">
+    <div class="question-text">Final question: What does our friendship mean to you? 💖</div>
+    <textarea id="a10" placeholder="Pour your heart out..." rows="4" style="width: 90%; max-width: 400px; padding: 15px; border-radius: 15px; background: rgba(0,0,0,0.2); color: white; border: 2px solid rgba(255,97,166,0.3); font-size: 1.1rem; margin: 15px 0;"></textarea>
+    <button class="btn" onclick="nextQuestion(10)">See Your Surprise! 🎁</button>
+  </div>
+
+  <div class="final-message" id="final">
+    <p>My Dearest Lilian,</p><br>
+    
+    <p>Every moment with you is a treasure I hold close to my heart. 💝</p>
+    <p>Your laughter is my favorite melody,</p>
+    <p>Your friendship my greatest blessing.</p><br>
+    
+    <p>Through all seasons of life,</p>
+    <p>I promise to always be there for you -</p>
+    <p>To celebrate your joys, comfort your sorrows,</p>
+    <p>And cherish every single memory we create. ✨</p><br>
+    
+    <p>You are more special than words could ever express,</p>
+    <p>And I'm endlessly grateful for you.</p><br>
+    
+    <p>Merry Christmas my beautiful friend 🎄</p>
+    <p>May our friendship shine brighter with each passing year. 💫</p><br>
+    
+    <div class="signature">Forever Yours 💖</div>
+    
+    <div style="margin-top: 40px;">
+      <button class="btn pulse" onclick="sendHug()">
+        <i class="fas fa-heart"></i> Send You All My Love 💌
+      </button>
+      <button class="btn" onclick="createLoveFireworks()" style="margin-left: 20px;">
+        <i class="fas fa-fireworks"></i> Love Fireworks! 🎆
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="music-player">
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+    <i class="fas fa-music"></i>
+  </button>
+</div>
+
+<!-- Hidden love messages that appear when clicking secret buttons -->
+<div class="hidden-love" id="hiddenMessage1" style="top: 150px; left: 50px;">
+  Did you know? Every time you smile, my world gets brighter. ✨
+</div>
+<div class="hidden-love" id="hiddenMessage2" style="bottom: 200px; right: 100px;">
+  You're the best part of my day, every day. 💖
+</div>
+
+<!-- Secret buttons -->
+<button class="secret-btn" style="top: 100px; left: 30px;" onclick="showHiddenMessage(1)">?</button>
+<button class="secret-btn" style="bottom: 150px; right: 80px;" onclick="showHiddenMessage(2)">?</button>
+
+<!-- Firebase & Libraries -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyB2mQNeygEwdWFCnHJnw9wlqHWKmXlfe38",
+  authDomain: "taptap-377d9.firebaseapp.com",
+  databaseURL: "https://taptap-377d9-default-rtdb.firebaseio.com",
+  projectId: "taptap-377d9",
+  storageBucket: "taptap-377d9.firebasestorage.app",
+  messagingSenderId: "146364410143",
+  appId: "1:146364410143:web:3ce902bdcaeb954091682a",
+  measurementId: "G-LRJ2TK7CDH"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Toastr configuration
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
+
+// App State
+let currentQuestion = 0;
+const totalQuestions = 10;
+let loveScore = 100;
+let musicPlaying = false;
+const backgroundMusic = new Audio('https://assets.mixkit.co/music/preview/mixkit-loving-you-1171.mp3');
+backgroundMusic.loop = true;
+
+// Typing effect messages
+const messages = [
+  "My Dearest Lilian... 💖",
+  "This Christmas, I wanted to give you something special 🎁",
+  "A gift that comes straight from my heart 💝",
+  "To celebrate our incredible friendship 🌟",
+  "And all the beautiful moments we've shared ✨",
+  "Are you ready for a little journey down memory lane? 🌈"
+];
+
+// DOM Elements
+const typingEl = document.getElementById('typing');
+const startBtn = document.getElementById('startBtn');
+const finalMessage = document.getElementById('final');
+const progressContainer = document.getElementById('progressContainer');
+const progressBar = document.getElementById('progressBar');
+const loveCounter = document.getElementById('loveCounter');
+const loveScoreEl = document.getElementById('loveScore');
+
+// Initialize
+window.onload = function() {
+  createBackgroundHearts(20);
+  toastr.success("Welcome to your special surprise, Lilian! 💖", "Hello Beautiful!");
+  
+  // Show love counter after a delay
+  setTimeout(() => {
+    loveCounter.style.display = 'block';
+    updateLoveScore(10); // Start with bonus points
+  }, 1000);
+};
+
+// Typing effect
+function typeMessage(index = 0, charIndex = 0) {
+  if (index >= messages.length) return;
+  
+  if (charIndex === 0) {
+    typingEl.innerHTML = '';
+  }
+  
+  if (charIndex < messages[index].length) {
+    typingEl.innerHTML += messages[index][charIndex];
+    setTimeout(() => typeMessage(index, charIndex + 1), 50);
+  } else {
+    typingEl.innerHTML += "<br><br>";
+    setTimeout(() => typeMessage(index + 1, 0), 800);
+  }
+}
+
+// Start the journey
+startBtn.addEventListener('click', () => {
+  startBtn.style.display = 'none';
+  progressContainer.style.display = 'block';
+  typeMessage();
+  updateProgressBar(0);
+  
+  // Show romantic toast messages
+  setTimeout(() => {
+    toastr.info("Every moment with you is magical ✨");
+  }, 3000);
+  
+  setTimeout(() => {
+    toastr.warning("You mean more to me than words can express 💕");
+  }, 6000);
+  
+  setTimeout(() => {
+    showQuestion(1);
+  }, messages.length * 1200);
+});
+
+// Show question with animation
+function showQuestion(n) {
+  currentQuestion = n;
+  const questionCard = document.getElementById('q' + n);
+  const allQuestions = document.querySelectorAll('.question-card');
+  
+  allQuestions.forEach(q => {
+    q.style.display = 'none';
+    q.classList.remove('active');
+  });
+  
+  questionCard.style.display = 'flex';
+  setTimeout(() => {
+    questionCard.classList.add('active');
+  }, 50);
+  
+  updateProgressBar((n / totalQuestions) * 100);
+  
+  // Show encouraging toast
+  const toastMessages = [
+    "I love hearing your thoughts 💭",
+    "You're doing amazing! 🌟",
+    "Your answers make me so happy! 💖",
+    "I cherish every word you say ✨",
+    "You're the best part of my day 🌸"
+  ];
+  
+  if (n > 1) {
+    toastr.success(toastMessages[Math.floor(Math.random() * toastMessages.length)]);
+  }
+}
+
+// Save answer to Firebase
+function saveAnswer(question, answer) {
+  db.collection('lilian_love_letters').add({
+    question: question,
+    answer: answer,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    lovePoints: answer.length // More points for longer answers!
+  }).then(() => {
+    updateLoveScore(answer.length);
+    createHearts(5);
+  }).catch(err => {
+    console.error("Error saving answer: ", err);
+    toastr.error("Couldn't save your answer, but I'll remember it in my heart 💖");
+  });
+}
+
+// Next question handler
+function nextQuestion(n) {
+  const answerInput = document.getElementById('a' + n);
+  const answer = answerInput ? answerInput.value.trim() : '';
+  
+  if (answerInput && answer === "") {
+    toastr.warning("Please share your thoughts with me 💭");
+    answerInput.focus();
+    return;
+  }
+  
+  const questionText = document.querySelector('#q' + n + ' .question-text').innerText;
+  saveAnswer(questionText, answer);
+  
+  if (n < totalQuestions) {
+    showQuestion(n + 1);
+  } else {
+    showFinalMessage();
+  }
+}
+
+// Submit answer for button-based questions
+function submitAnswer(questionNum, answer) {
+  const questionText = document.querySelector('#q' + questionNum + ' .question-text').innerText;
+  saveAnswer(questionText, answer);
+  
+  // Special effects for certain answers
+  if (answer.includes('magic') || answer.includes('contagious')) {
+    createLoveFireworks();
+    updateLoveScore(25);
+  }
+  
+  if (questionNum < totalQuestions) {
+    showQuestion(questionNum + 1);
+  } else {
+    showFinalMessage();
+  }
+}
+
+// Show final message
+function showFinalMessage() {
+  document.querySelectorAll('.question-card').forEach(q => {
+    q.style.display = 'none';
+  });
+  
+  finalMessage.style.display = 'block';
+  progressContainer.style.display = 'none';
+  
+  // Grand finale effects
+  setTimeout(() => {
+    createLoveFireworks();
+    createHearts(50);
+    toastr.success("You've completed our love journey! 💖", "Amazing!");
+    
+    // Play special celebration
+    confetti({
+      particleCount: 150,
+      spread: 100,
+      origin: { y: 0.6 }
+    });
+    
+    // Romantic message sequence
+    const finalMessages = [
+      "You are truly incredible 💫",
+      "Thank you for being you 🌸",
+      "I cherish our friendship every day 💝",
+      "You make my world brighter ✨",
+      "Forever grateful for you 💖"
+    ];
+    
+    let i = 0;
+    const messageInterval = setInterval(() => {
+      if (i < finalMessages.length) {
+        toastr.info(finalMessages[i]);
+        i++;
+      } else {
+        clearInterval(messageInterval);
+      }
+    }, 2000);
+  }, 500);
+}
+
+// Update progress bar
+function updateProgressBar(percent) {
+  progressBar.style.width = percent + '%';
+}
+
+// Update love score
+function updateLoveScore(points) {
+  loveScore += points;
+  loveScoreEl.textContent = loveScore;
+  loveCounter.classList.add('animate__animated', 'animate__pulse');
+  setTimeout(() => {
+    loveCounter.classList.remove('animate__animated', 'animate__pulse');
+  }, 1000);
+  
+  // Special rewards at certain scores
+  if (loveScore >= 200) {
+    toastr.success("200 Love Points! You're amazing! 🌟");
+    createHearts(10);
+  }
+  if (loveScore >= 500) {
+    toastr.success("500 Love Points! You're my superstar! 💫");
+    createLoveFireworks();
+  }
+}
+
+// Create floating hearts
+function createHearts(count) {
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (3 + Math.random() * 4) + 's';
+      heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+      heart.innerHTML = Math.random() > 0.5 ? '💖' : '💕';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, i * 100);
+  }
+}
+
+// Create background hearts
+function createBackgroundHearts(count) {
+  const container = document.getElementById('backgroundHearts');
+  for (let i = 0; i < count; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.animationDuration = (8 + Math.random() * 10) + 's';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    heart.style.fontSize = (15 + Math.random() * 25) + 'px';
+    heart.innerHTML = Math.random() > 0.5 ? '💖' : '💕';
+    container.appendChild(heart);
+  }
+}
+
+// Create love fireworks
+function createLoveFireworks() {
+  confetti({
+    particleCount: 100,
+    angle: 60,
+    spread: 55,
+    origin: { x: 0 },
+    colors: ['#ff61a6', '#ff9cd8', '#ff9cee', '#ffffff']
+  });
+  
+  confetti({
+    particleCount: 100,
+    angle: 120,
+    spread: 55,
+    origin: { x: 1 },
+    colors: ['#ff61a6', '#ff9cd8', '#ff9cee', '#ffffff']
+  });
+  
+  // Add heart-shaped confetti
+  setTimeout(() => {
+    confetti({
+      particleCount: 30,
+      spread: 70,
+      origin: { y: 0.6 },
+      shapes: ['heart'],
+      colors: ['#ff61a6']
+    });
+  }, 300);
+}
+
+// Send hug
+function sendHug() {
+  updateLoveScore(50);
+  createLoveFireworks();
+  createHearts(20);
+  
+  toastr.success("🤗 Virtual hug sent with all my love! 💖", "Hug Received!");
+  
+  // Special hug message
+  const hugMessages = [
+    "You deserve all the hugs in the world! 🌍",
+    "Wish I could give you a real hug right now! 💕",
+    "You're the best hugger! 🤗",
+    "Sending you warmest hugs and love! 💖"
+  ];
+  
+  setTimeout(() => {
+    toastr.info(hugMessages[Math.floor(Math.random() * hugMessages.length)]);
+  }, 1500);
+}
+
+// Toggle background music
+function toggleMusic() {
+  const musicBtn = document.getElementById('musicBtn');
+  
+  if (musicPlaying) {
+    backgroundMusic.pause();
+    musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+    toastr.info("Music paused ⏸️");
+  } else {
+    backgroundMusic.play().catch(e => {
+      toastr.warning("Click anywhere to enable music 🎵");
+      document.body.addEventListener('click', () => {
+        backgroundMusic.play();
+        musicPlaying = true;
+        musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        toastr.success("Romantic music playing 🎶");
+      }, { once: true });
+    });
+    musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    toastr.success("Playing our special song 🎵");
+  }
+  
+  musicPlaying = !musicPlaying;
+}
+
+// Show hidden love messages
+function showHiddenMessage(id) {
+  const message = document.getElementById('hiddenMessage' + id);
+  message.style.display = 'block';
+  updateLoveScore(15);
+  
+  setTimeout(() => {
+    message.style.display = 'none';
+  }, 3000);
+}
+
+// Easter egg: Secret code for extra love
+const secretCode = [];
+const konamiCode = [
+  'ArrowUp', 'ArrowUp', 
+  'ArrowDown', 'ArrowDown',
+  'ArrowLeft', 'ArrowRight',
+  'ArrowLeft', 'ArrowRight',
+  'b', 'a'
+];
+
+document.addEventListener('keydown', (e) => {
+  secretCode.push(e.key);
+  secretCode.splice(-konamiCode.length - 1, secretCode.length - konamiCode.length);
+  
+  if (secretCode.join('').includes(konamiCode.join(''))) {
+    toastr.success("🎉 Secret love code activated! 🎉", "You found it!");
+    updateLoveScore(1000);
+    createLoveFireworks();
+    createHearts(100);
+    secretCode.length = 0;
+  }
+});
+</script>
+</body>
+</html>
